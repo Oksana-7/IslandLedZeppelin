@@ -1,0 +1,150 @@
+---
+period: 1000
+rows: 20
+cols: 100
+percentProbably: 30
+
+animalLimits:
+  Wolf:
+    maxCountInArea: 30
+    maxWeight: 50.00
+    maxSpeed: 3
+    maxFood: 8.00
+  Boa:
+    maxCountInArea: 30
+    maxWeight: 15.00
+    maxSpeed: 1
+    maxFood: 3.00
+  Fox:
+    maxCountInArea: 30
+    maxWeight: 8.00
+    maxSpeed: 2
+    maxFood: 2.00
+  Bear:
+    maxCountInArea: 5
+    maxWeight: 500.00
+    maxSpeed: 2
+    maxFood: 80.00
+  Eagle:
+    maxCountInArea: 20
+    maxWeight: 6.00
+    maxSpeed: 3
+    maxFood: 1.00
+  Horse:
+    maxCountInArea: 20
+    maxWeight: 400.00
+    maxSpeed: 4
+    maxFood: 60.00
+  Deer:
+    maxCountInArea: 20
+    maxWeight: 300.00
+    maxSpeed: 4
+    maxFood: 50.00
+  Rabbit:
+    maxCountInArea: 150
+    maxWeight: 2.00
+    maxSpeed: 2
+    maxFood: 0.45
+  Mouse:
+    maxCountInArea: 500
+    maxWeight: 0.05
+    maxSpeed: 1
+    maxFood: 0.01
+  Goat:
+    maxCountInArea: 140
+    maxWeight: 60
+    maxSpeed: 3
+    maxFood: 10
+  Sheep:
+    maxCountInArea: 140
+    maxWeight: 70
+    maxSpeed: 3
+    maxFood: 15
+  Boar:
+    maxCountInArea: 50
+    maxWeight: 400
+    maxSpeed: 2
+    maxFood: 50
+  Buffalo:
+    maxCountInArea: 10
+    maxWeight: 700
+    maxSpeed: 3
+    maxFood: 100
+  Duck:
+    maxCountInArea: 200
+    maxWeight: 1
+    maxSpeed: 4
+    maxFood: 0.15
+  Caterpillar:
+    maxCountInArea: 1000
+    maxWeight: 0.01
+    maxSpeed: 0
+    maxFood: 0
+  Plant:
+    maxCountInArea: 1
+    maxWeight: 200.00
+    maxSpeed: 0
+    maxFood: 0.00
+
+foodMap:
+  Wolf:
+    Horse: 50
+    Deer: 15
+    Rabbit: 60
+    Mouse: 80
+    Goat: 60
+    Sheep: 70
+    Boar: 15
+    Buffalo: 10
+    Duck: 40
+  Boa:
+    Fox: 15
+    Rabbit: 20
+    Mouse: 40
+    Duck: 10
+  Fox:
+    Rabbit: 70
+    Mouse: 90
+    Duck: 60
+    Caterpillar: 40
+  Bear:
+    Boa: 80
+    Horse: 40
+    Deer: 80
+    Rabbit: 80
+    Mouse: 90
+    Goat: 70
+    Sheep: 70
+    Boar: 50
+    Buffalo: 20
+    Duck: 10
+  Eagle:
+    Fox: 10
+    Rabbit: 90
+    Mouse: 90
+    Duck: 80
+  Horse:
+    Plant: 100
+  Deer:
+    Plant: 100
+  Rabbit:
+    Plant: 100
+  Mouse:
+    Caterpillar: 90
+    Plant: 100
+  Goat:
+    Plant: 100
+  Sheep:
+    Plant: 100
+  Boar:
+    Mouse: 50
+    Caterpillar: 90
+    Plant: 100
+  Buffalo:
+    Plant: 100
+  Duck:
+    Caterpillar: 90
+    Plant: 100
+  Caterpillar:
+    Plant: 100
+  Plant: { }

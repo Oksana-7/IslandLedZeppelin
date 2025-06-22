@@ -11,7 +11,7 @@ public class GameMap {
         this.cells = new Cell[rows][cols];
     }
 
-    public Cell[][] getCells() {
+    public Cell[][]  getCells() {
         return cells;
     }
 
