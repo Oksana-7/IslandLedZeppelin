@@ -1,25 +1,22 @@
 package com.javarush.island.kalichinskaia.logic.island;
 
-import com.javarush.island.kalichinskaia.logic.Animal;
 import com.javarush.island.kalichinskaia.logic.Organism;
-import com.javarush.island.kalichinskaia.logic.Plant;
 import com.javarush.island.kalichinskaia.tmp.config.Config;
 import com.javarush.island.kalichinskaia.tmp.config.Config.Limit;
-
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import static com.javarush.island.kalichinskaia.tmp.config.Config.TYPES;
 
 @Getter
-// todo add method: public Set<Organism> getOrganismsSet() {...}
 public class Area {
 
-    private final ConcurrentHashMap<String, Set<Organism>> organismsByType; // todo should getter be synchronized???
+    private final ConcurrentHashMap<String, Set<Organism>> organismsByType;
     @Setter
     private List<Area> neighborAreas = new ArrayList<>();
 
@@ -60,6 +57,12 @@ public class Area {
         return currentArea;
     }
 
+    public synchronized Set<Organism> getAllOrganisms() {
+        return getOrganismsByType().values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
+    }
+
     public synchronized boolean addOrganism(Organism organism) {
         Set<Organism> organisms = organismsByType.get(getClass().getSimpleName());
         int maxCount = organism.getLimit().getMaxCountInArea();
@@ -68,7 +71,7 @@ public class Area {
         return organisms.add(organism);
     }
 
-    public synchronized boolean deleteOrganism(Organism organism) {
+    public synchronized boolean removeOrganism(Organism organism) {
         Set<Organism> organisms = organismsByType.get(organism.getClass().getSimpleName());
         return organisms.remove(organism);
     }

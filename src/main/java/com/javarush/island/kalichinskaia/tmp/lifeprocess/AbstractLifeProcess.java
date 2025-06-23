@@ -6,8 +6,6 @@ import com.javarush.island.kalichinskaia.logic.island.Island;
 import com.javarush.island.kalichinskaia.tmp.config.Config;
 import lombok.Setter;
 
-import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
 
 @Setter
@@ -15,17 +13,12 @@ public abstract class AbstractLifeProcess implements Runnable {
     protected Config config;
     protected Island island;
 
-    // todo via streams api
     protected void execute(Consumer<Organism> action) {
         Area[][] areas = island.getAreas();
-        for (Area[] area : areas) {
-            for (Area value : area) {
-                // todo move logic to Area
-                Map<String, Set<Organism>> allOrganisms = value.getOrganismsByType();
-                for (Set<Organism> organisms : allOrganisms.values()) {
-                    for (Organism organism : organisms) {
-                        action.accept(organism);
-                    }
+        for (Area[] areaRow : areas) {
+            for (Area area : areaRow) {
+                for (Organism organism : area.getAllOrganisms()) {
+                    action.accept(organism);
                 }
             }
         }

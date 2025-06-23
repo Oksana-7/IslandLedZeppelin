@@ -49,8 +49,7 @@ public abstract class Organism {
         synchronized (getArea()) {
             if (!canReproduce()) return;
             Organism child = createChild();
-            Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
-            organisms.add(child);
+            getArea().addOrganism(child);
         }
     }
 

@@ -15,59 +15,22 @@ public abstract class Animal extends Organism {
 
     @Override
     public void move() {
-        // todo refactoring: move logic to this method from Area
         int maxCountStep = getLimit().getMaxSpeed();
         int countStep = ThreadLocalRandom.current().nextInt(maxCountStep + 1);
+        Area currentArea = getArea();
         Area targetArea = getArea().getTargetArea(countStep);
-        targetArea.addOrganism(this);
-        if (getArea().deleteOrganism(this)) setArea(targetArea);
-        else targetArea.deleteOrganism(this);
-    }
 
-    public void moveV2() {
-        int maxCountStep = getLimit().getMaxSpeed();
-        int countStep = ThreadLocalRandom.current().nextInt(maxCountStep + 1);
-        Area targetArea = getArea().getTargetArea(countStep);
-        synchronized (targetArea) {
-            Set<Organism> organisms = targetArea.getOrganismsByType().get(getClass().getSimpleName());
-            int maxCount = getLimit().getMaxCountInArea();
-            int size = organisms.size();
-            if (size >= maxCount) return;
-            organisms.add(this);
-            synchronized (getArea()) {
-                Set<Organism> organismsOfCurrentArea = getArea().getOrganismsByType().get(getClass().getSimpleName());
-                if (organismsOfCurrentArea.remove(this)) {
-                    setArea(targetArea);
-                } else {
-                    organisms.remove(this);
-                }
+        // Сейчас порядок блокировки не нужен, но если движение будет происходить многопоточно,
+        // то возможен случай: животное 1 перемещается из A в B, животное 2 перемещается из B в A.
+        // В этом случае без фиксированного порядка блокировок возможен deadlock.
+        var lock1 = currentArea.hashCode() < targetArea.hashCode() ? currentArea : targetArea;
+        var lock2 = lock1 == currentArea ? targetArea : currentArea;
+        synchronized (lock1) {
+            synchronized (lock2) {
+                if (targetArea.addOrganism(this)) return;
+                if (currentArea.removeOrganism(this)) setArea(targetArea);
+                else targetArea.removeOrganism(this);
             }
-        }
-    }
-
-    public void moveV3() {
-        int maxCountStep = getLimit().getMaxSpeed();
-        int countStep = ThreadLocalRandom.current().nextInt(maxCountStep + 1);
-        Area targetArea = getArea().getTargetArea(countStep);
-        addTo(targetArea);
-        if (deleteFrom(getArea())) setArea(targetArea);
-        else deleteFrom(targetArea);
-    }
-
-    private void addTo(Area area) {
-        synchronized (area) {
-            Set<Organism> organisms = area.getOrganismsByType().get(getClass().getSimpleName());
-            int maxCount = getLimit().getMaxCountInArea();
-            int size = organisms.size();
-            if (size >= maxCount) return;
-            organisms.add(this);
-        }
-    }
-
-    private boolean deleteFrom(Area area) {
-        synchronized (area) {
-            Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
-            return organisms.remove(this);
         }
     }
 
