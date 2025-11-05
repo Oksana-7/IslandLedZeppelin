@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Island {
     @Getter
-    private Area[][] areas;
+    private final Area[][] areas;
 
     public Island(Config config) {
         this.areas = new Area[config.getRows()][config.getCols()];
