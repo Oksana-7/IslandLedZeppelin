@@ -1,9 +1,6 @@
 package com.javarush.island.kalichinskaia;
 
-import com.javarush.island.kalichinskaia.logic.Organism;
-import com.javarush.island.kalichinskaia.tmp.IslandLife;
-
-import java.util.Set;
+import com.javarush.island.kalichinskaia.core.IslandLife;
 
 public class IslandLifeRunner {
     public static void main(String[] args) {
