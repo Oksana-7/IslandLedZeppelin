@@ -4,7 +4,7 @@ rows: 20
 cols: 100
 percentProbably: 30
 
-animalLimits:
+organismLimits:
   Wolf:
     maxCountInArea: 30
     maxWeight: 50.00

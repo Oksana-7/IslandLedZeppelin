@@ -29,10 +29,10 @@ public class Area {
             organismsByType.put(animalName, new HashSet<>());
             boolean isFill = ThreadLocalRandom.current().nextDouble(0d, 100d) < config.getPercentProbably();
             if (isFill) {
-                int max = config.getAnimalLimits().get(animalName).getMaxCountInArea();
+                int max = config.getOrganismLimits().get(animalName).getMaxCountInArea();
                 int count = ThreadLocalRandom.current().nextInt(0, max);
                 for (int j = 0; j < count; j++) {
-                    Limit limit = config.getAnimalLimits().get(animalName);
+                    Limit limit = config.getOrganismLimits().get(animalName);
                     Map<String, Integer> foodMap = config.getFoodMap().get(animalName);
                     Organism organism = Organism.createOrganismOfType(type, limit, foodMap, this);
                     organismsByType.get(animalName).add(organism);

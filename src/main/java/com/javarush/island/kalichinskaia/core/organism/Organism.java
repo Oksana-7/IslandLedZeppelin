@@ -59,7 +59,7 @@ public abstract class Organism {
 
     protected boolean canReproduce() {
         Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
-        return weight <= getLimit().getMaxWeight() / 2
+        return weight > getLimit().getMaxWeight() / 2
                 && organisms.contains(this)
                 && organisms.size() < limit.getMaxCountInArea();
     }

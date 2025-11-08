@@ -26,7 +26,7 @@ public class Config {
     private int rows;
     private int cols;
     private int percentProbably;
-    private Map<String, Limit> animalLimits = new HashMap<>();
+    private Map<String, Limit> organismLimits = new HashMap<>();
     private Map<String, Map<String, Integer>> foodMap = new HashMap<>();
 
     @SneakyThrows
