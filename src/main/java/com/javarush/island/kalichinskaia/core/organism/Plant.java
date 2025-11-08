@@ -1,21 +1,26 @@
 package com.javarush.island.kalichinskaia.core.organism;
 
+import com.javarush.island.kalichinskaia.config.Config.Limit;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
 import com.javarush.island.kalichinskaia.config.Config;
 
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Plant extends Organism {
 
-    protected Plant(Config.Limit limit, Map<String, Integer> foodMap, Area area) {
+    protected Plant(Limit limit, Map<String, Integer> foodMap, Area area) {
         super(limit, foodMap, area);
     }
 
     @Override
     public void eatAndGrow() {
-        // todo skip eat
-        // todo impl grow
-        super.eatAndGrow();
+        synchronized (getArea()) {
+            int growPercent = ThreadLocalRandom.current().nextInt(getLimit().getAdditional().get("maxGrowPercent"));
+            double grow = getWeight() * growPercent / 100.0;
+            double newWeight = Math.max(getLimit().getMaxWeight(), getWeight() + grow);
+            setWeight(newWeight);
+        }
     }
 
     @Override

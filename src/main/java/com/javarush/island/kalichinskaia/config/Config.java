@@ -26,6 +26,7 @@ public class Config {
     private int rows;
     private int cols;
     private int percentProbably;
+    private int percentPlantGrow;
     private Map<String, Limit> organismLimits = new HashMap<>();
     private Map<String, Map<String, Integer>> foodMap = new HashMap<>();
 
@@ -50,6 +51,6 @@ public class Config {
         private double maxWeight;
         private int maxSpeed;
         private double maxFood;
+        private Map<String, Integer> additional;
     }
-
 }
