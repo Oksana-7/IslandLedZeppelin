@@ -1,14 +1,13 @@
 package com.javarush.island.kalichinskaia.core.organism;
 
-import com.javarush.island.kalichinskaia.core.habitat.Area;
 import com.javarush.island.kalichinskaia.config.Config.Limit;
+import com.javarush.island.kalichinskaia.core.habitat.Area;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Animal extends Organism {
 
@@ -57,53 +56,36 @@ public abstract class Animal extends Organism {
 
     @Override
     public void eatAndGrow() {
-        // todo impl
         synchronized (getArea()) {
-            if (safeFindFood(getArea())) {
-                if (getWeight() > 0) {
-                    int growPercent = ThreadLocalRandom.current().nextInt(getLimit().getAdditional().get("maxGrowPercent"));
-                    double grow = getWeight() * growPercent / 100.0;
-                    double newWeight = Math.max(getLimit().getMaxWeight(), getWeight() + grow);
-                    setWeight(newWeight);
-                }
-            }
-        }
-    }
-
-    protected boolean safeFindFood(Area area) {
-        synchronized (getArea()) {
-            boolean foodFound = false;
             Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
-            if (organisms.contains(this)) {
-                double needFood = getNeedFood();
-                if (!(needFood <= 0)) {
-                    Iterator<Map.Entry<String, Integer>> foodIterator = getFoodMap().entrySet().iterator();
-                    while (needFood > 0 && foodIterator.hasNext()) {
-                        Map.Entry<String, Integer> entry = foodIterator.next();
-                        String keyFood = entry.getKey();
-                        Integer probably = entry.getValue();
-                        Map<String, Integer> foods = getFoodMap();
-                        if (Objects.nonNull(foods) && !foods.isEmpty() && foods.containsValue(probably)) {
-                            for (Iterator<Organism> organismIterator = organisms.iterator(); organismIterator.hasNext(); ) {
-                                Organism o = organismIterator.next();
-                                double foodWeight = o.getWeight();
-                                double delta = Math.min(foodWeight, needFood);
-                                setWeight(getWeight() + delta);
-                                o.setWeight(foodWeight - delta);
-                                if (o.getWeight() <= 0) {
-                                    organismIterator.remove();
-                                }
-                                needFood -= delta;
-                                foodFound = true;
-                                if (needFood <= 0) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
+            if (!organisms.contains(this)) return;
+
+            boolean eat = false; // todo may be rename
+            double needFood = getNeedFood();
+            if (needFood <= 0) return;
+            Iterator<Entry<String, Integer>> foodMapIterator = getFoodMap().entrySet().iterator();
+            while (needFood > 0 && foodMapIterator.hasNext()) {
+                Entry<String, Integer> entry = foodMapIterator.next();
+                String keyFood = entry.getKey(); // todo not used?
+                Integer probably = entry.getValue();
+                Set<Organism> foods = getArea().getOrganismsByType().get(keyFood);
+                boolean isHuntSuccess = ThreadLocalRandom.current().nextDouble(100d) < probably;
+                if (foods == null || foods.isEmpty() || !isHuntSuccess) continue;
+                Iterator<Organism> foodIterator = foods.iterator();
+                while (foodIterator.hasNext()) {
+                    Organism food = foodIterator.next();
+                    double foodWeight = food.getWeight();
+                    double delta = Math.min(foodWeight, needFood);
+                    setWeight(getWeight() + delta); // todo may be use universal method???
+                    food.setWeight(foodWeight - delta); // todo may be use universal method???
+                    if (food.getWeight() <= 0) foodIterator.remove();
+                    needFood -= delta;
+                    eat = true;
+                    if (needFood <= 0) break;
                 }
             }
-            return foodFound;
+            if (eat) return;
+            // todo slim via universal method + settings.yml
         }
     }
 

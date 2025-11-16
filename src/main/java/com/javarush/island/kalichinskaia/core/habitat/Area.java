@@ -25,17 +25,17 @@ public class Area {
     public Area(Config config) {
         organismsByType = new ConcurrentHashMap<>();
         for (Class<? extends Organism> type : TYPES) {
-            String animalName = type.getSimpleName();
-            organismsByType.put(animalName, new HashSet<>());
-            boolean isFill = ThreadLocalRandom.current().nextDouble(0d, 100d) < config.getPercentProbably();
+            String organismName = type.getSimpleName();
+            organismsByType.put(organismName, new HashSet<>());
+            boolean isFill = ThreadLocalRandom.current().nextDouble(100d) < config.getPercentProbably();
             if (isFill) {
-                int max = config.getOrganismLimits().get(animalName).getMaxCountInArea();
-                int count = ThreadLocalRandom.current().nextInt(0, max);
+                int max = config.getOrganismLimits().get(organismName).getMaxCountInArea();
+                int count = ThreadLocalRandom.current().nextInt(max);
                 for (int j = 0; j < count; j++) {
-                    Limit limit = config.getOrganismLimits().get(animalName);
-                    Map<String, Integer> foodMap = config.getFoodMap().get(animalName);
+                    Limit limit = config.getOrganismLimits().get(organismName);
+                    Map<String, Integer> foodMap = config.getFoodMap().get(organismName);
                     Organism organism = Organism.createOrganismOfType(type, limit, foodMap, this);
-                    organismsByType.get(animalName).add(organism);
+                    organismsByType.get(organismName).add(organism);
                 }
             }
         }
