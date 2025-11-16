@@ -2,8 +2,6 @@ package com.javarush.island.kalichinskaia.core.organism;
 
 import com.javarush.island.kalichinskaia.config.Config.Limit;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
-import com.javarush.island.kalichinskaia.config.Config;
-
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
