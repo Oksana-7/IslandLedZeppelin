@@ -86,7 +86,7 @@ public abstract class Animal extends Organism {
             }
             if (eat) return;
             // todo slim via universal method + settings.yml -done
-            int slimPercent = ThreadLocalRandom.current().nextInt(getLimit().getAdditional().get("maxSlimPercent"));
+            int slimPercent = ThreadLocalRandom.current().nextInt(getLimit().getAdditional().get("maxSlimPercent")) * -1;
             double grow = getWeight() * slimPercent / 100.0;
             double newWeight = Math.max(getLimit().getMaxWeight(), getWeight() - grow);
             setWeight(newWeight);
