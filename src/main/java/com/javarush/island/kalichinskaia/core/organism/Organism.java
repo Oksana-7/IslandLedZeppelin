@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 public abstract class Organism {
-    private final Limit limit;
+    private final Limit limit; // todo rename Params
     @Setter
     private double weight;
     private final Map<String, Integer> foodMap;

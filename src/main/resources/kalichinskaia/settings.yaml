@@ -5,14 +5,14 @@ cols: 100
 percentProbably: 30
 percentPlantGrow: 15
 
-organismLimits:
+organismLimits: # todo rename organismParams
   Wolf:
     maxCountInArea: 30
     maxWeight: 50.00
     maxSpeed: 3
     maxFood: 8.00
     additional:
-      maxSlimPercent: 15
+      maxSlimPercent: 15 # todo rename slimPercent
   Boa:
     maxCountInArea: 30
     maxWeight: 15.00

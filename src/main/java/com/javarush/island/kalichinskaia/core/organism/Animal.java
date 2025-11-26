@@ -60,13 +60,13 @@ public abstract class Animal extends Organism {
             Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
             if (!organisms.contains(this)) return;
 
-            boolean eat = false; // todo may be rename
+            boolean eat = false;
             double needFood = getNeedFood();
             if (needFood <= 0) return;
             Iterator<Entry<String, Integer>> foodMapIterator = getFoodMap().entrySet().iterator();
             while (needFood > 0 && foodMapIterator.hasNext()) {
                 Entry<String, Integer> entry = foodMapIterator.next();
-                String keyFood = entry.getKey(); // todo not used?
+                String keyFood = entry.getKey();
                 Integer probably = entry.getValue();
                 Set<Organism> foods = getArea().getOrganismsByType().get(keyFood);
                 boolean isHuntSuccess = ThreadLocalRandom.current().nextDouble(100d) < probably;
@@ -86,9 +86,9 @@ public abstract class Animal extends Organism {
             }
             if (eat) return;
             // todo slim via universal method + settings.yml -done
-            int slimPercent = ThreadLocalRandom.current().nextInt(getLimit().getAdditional().get("maxSlimPercent")) * -1;
-            double grow = getWeight() * slimPercent / 100.0;
-            double newWeight = Math.max(getLimit().getMaxWeight(), getWeight() - grow);
+            int slimPercent = ThreadLocalRandom.current().nextInt(getLimit().getAdditional().get("maxSlimPercent")) * -1; // todo use name "slimPercent"
+            double slim = getWeight() * slimPercent / 100.0;
+            double newWeight = Math.max(getLimit().getMaxWeight(), getWeight() - slim); // todo logic mistake
             setWeight(newWeight);
 
         }
