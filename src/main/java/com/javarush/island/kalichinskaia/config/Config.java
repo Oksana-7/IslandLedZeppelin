@@ -27,7 +27,6 @@ public class Config {
     private int cols;
     private int percentProbably;
     private int percentPlantGrow;
-    // todo+ rename to organism params
     private Map<String, Params> organismParams = new HashMap<>();
     private Map<String, Map<String, Integer>> foodMap = new HashMap<>();
 
@@ -47,7 +46,6 @@ public class Config {
     @Setter
     @ToString
     @NoArgsConstructor
-    // todo+ rename to Params
     public static class Params {
         private int maxCountInArea;
         private double maxWeight;

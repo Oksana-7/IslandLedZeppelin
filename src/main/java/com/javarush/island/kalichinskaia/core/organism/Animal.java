@@ -11,13 +11,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Organism {
 
-    protected Animal(Params limit, Map<String, Integer> foodMap, Area area) {
-        super(limit, foodMap, area);
+    protected Animal(Params params, Map<String, Integer> foodMap, Area area) {
+        super(params, foodMap, area);
     }
 
     @Override
     public void move() {
-        int maxCountStep = getParam().getMaxSpeed();
+        int maxCountStep = getParams().getMaxSpeed();
         int countStep = ThreadLocalRandom.current().nextInt(maxCountStep + 1);
         Area currentArea = getArea();
         Area targetArea = getArea().getTargetArea(countStep);
@@ -51,7 +51,8 @@ public abstract class Animal extends Organism {
     @Override
     public void reproduce() {
         super.reproduce();
-        setWeight(getWeight() - getChildWeight() / 2);
+        double slim = getChildWeight() / 2;
+        changeWeight(-slim);
     }
 
     @Override
@@ -76,9 +77,8 @@ public abstract class Animal extends Organism {
                     Organism food = foodIterator.next();
                     double foodWeight = food.getWeight();
                     double delta = Math.min(foodWeight, needFood);
-                    setWeight(getWeight() + delta); // todo- may be use universal method???
-//                    food.setWeight(foodWeight - delta); // todo+ may be use universal method???
-                    food.changeWeight(foodWeight, delta);
+                    changeWeight(delta);
+                    food.changeWeight(-delta);
                     if (food.getWeight() <= 0) foodIterator.remove();
                     needFood -= delta;
                     eat = true;
@@ -86,17 +86,14 @@ public abstract class Animal extends Organism {
                 }
             }
             if (eat) return;
-            // todo+ slim via universal method + settings.yml
-            int slimPercent = ThreadLocalRandom.current().nextInt(getParam().getAdditional().get("slimPercent")) * -1;
+            int slimPercent = ThreadLocalRandom.current().nextInt(getParams().getAdditional().get("slimPercent")) * -1;
             double slim = getWeight() * slimPercent / 100.0;
-//            double newWeight = getWeight() - slim;
-//            setWeight(newWeight);
-            changeWeight(getWeight(), slim);
+            changeWeight(-slim);
         }
     }
 
     private double getNeedFood() {
-        return Math.min(getParam().getMaxFood(),
-                getParam().getMaxWeight() - getWeight());
+        return Math.min(getParams().getMaxFood(),
+                getParams().getMaxWeight() - getWeight());
     }
 }

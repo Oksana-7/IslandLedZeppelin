@@ -1,5 +1,6 @@
 package com.javarush.island.kalichinskaia.core.habitat;
 
+import com.javarush.island.kalichinskaia.config.Config.Params;
 import com.javarush.island.kalichinskaia.core.organism.Organism;
 import com.javarush.island.kalichinskaia.config.Config;
 import lombok.Getter;
@@ -31,9 +32,9 @@ public class Area {
                 int max = config.getOrganismParams().get(organismName).getMaxCountInArea();
                 int count = ThreadLocalRandom.current().nextInt(max);
                 for (int j = 0; j < count; j++) {
-                    Config.Params limit = config.getOrganismParams().get(organismName);
+                    Params params = config.getOrganismParams().get(organismName);
                     Map<String, Integer> foodMap = config.getFoodMap().get(organismName);
-                    Organism organism = Organism.createOrganismOfType(type, limit, foodMap, this);
+                    Organism organism = Organism.createOrganismOfType(type, params, foodMap, this);
                     organismsByType.get(organismName).add(organism);
                 }
             }
@@ -66,7 +67,7 @@ public class Area {
 
     public synchronized boolean addOrganism(Organism organism) {
         Set<Organism> organisms = organismsByType.get(getClass().getSimpleName());
-        int maxCount = organism.getParam().getMaxCountInArea();
+        int maxCount = organism.getParams().getMaxCountInArea();
         int size = organisms.size();
         if (size >= maxCount) return false;
         return organisms.add(organism);

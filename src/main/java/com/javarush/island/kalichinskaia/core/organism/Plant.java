@@ -14,11 +14,9 @@ public class Plant extends Organism {
     @Override
     public void eatAndGrow() {
         synchronized (getArea()) {
-            int growPercent = ThreadLocalRandom.current().nextInt(getParam().getAdditional().get("maxGrowPercent"));
-            // todo- impl change weight via universal method (universal method in Organism "changeWeight")
+            int growPercent = ThreadLocalRandom.current().nextInt(getParams().getAdditional().get("maxGrowPercent"));
             double grow = getWeight() * growPercent / 100.0;
-            double newWeight = Math.max(getParam().getMaxWeight(), getWeight() + grow);
-            setWeight(newWeight);
+            changeWeight(grow);
         }
     }
 

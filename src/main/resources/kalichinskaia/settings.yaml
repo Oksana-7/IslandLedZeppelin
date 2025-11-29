@@ -5,7 +5,7 @@ cols: 100
 percentProbably: 30
 percentPlantGrow: 15
 
-organismParams: # todo+ rename organismParams
+organismParams:
   Wolf:
     maxCountInArea: 30
     maxWeight: 50.00

@@ -11,22 +11,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 public abstract class Organism {
-    private final Params param; // todo+ rename Params
+    private final Params params;
     @Setter
     private double weight;
     private final Map<String, Integer> foodMap;
     @Setter
     private Area area;
 
-    protected Organism(Params param, Map<String, Integer> foodMap, Area area) {
-        this.param = param;
-        this.weight = ThreadLocalRandom.current().nextDouble(param.getMaxWeight() / 2, param.getMaxWeight());
+    protected Organism(Params params, Map<String, Integer> foodMap, Area area) {
+        this.params = params;
+        this.weight = ThreadLocalRandom.current().nextDouble(params.getMaxWeight() / 2, params.getMaxWeight());
         this.foodMap = foodMap;
         this.area = area;
     }
 
     public Organism createChild() {
-        Organism child = createOrganismOfType(this.getClass(), this.param, this.foodMap, this.area);
+        Organism child = createOrganismOfType(this.getClass(), this.params, this.foodMap, this.area);
         child.setWeight(getChildWeight());
         return child;
     }
@@ -60,16 +60,16 @@ public abstract class Organism {
 
     protected boolean canReproduce() {
         Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
-        return weight > getParam().getMaxWeight() / 2
+        return weight > getParams().getMaxWeight() / 2
                 && organisms.contains(this)
-                && organisms.size() < param.getMaxCountInArea();
+                && organisms.size() < params.getMaxCountInArea();
     }
 
     protected abstract double getChildWeight();
 
-    public void changeWeight(double weight, double delta) {
-        double newWeight = weight - delta;
-        setWeight(newWeight);
+    public void changeWeight(double delta) {
+        // todo impl
+        double newWeight = weight - delta; // todo + or -???
+        setWeight(newWeight); // todo direct initialization
     }
-
 }
