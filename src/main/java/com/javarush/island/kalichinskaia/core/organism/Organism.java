@@ -68,8 +68,8 @@ public abstract class Organism {
     protected abstract double getChildWeight();
 
     public void changeWeight(double delta) {
-        // todo impl
-        double newWeight = weight - delta; // todo + or -???
-        setWeight(newWeight); // todo direct initialization
+        weight += delta;
+        weight = Math.max(0, weight);
+        weight = Math.min(weight, params.getMaxWeight());
     }
 }

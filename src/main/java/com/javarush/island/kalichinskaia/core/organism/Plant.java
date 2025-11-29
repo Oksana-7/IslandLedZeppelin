@@ -16,7 +16,7 @@ public class Plant extends Organism {
         synchronized (getArea()) {
             int growPercent = ThreadLocalRandom.current().nextInt(getParams().getAdditional().get("maxGrowPercent"));
             double grow = getWeight() * growPercent / 100.0;
-            changeWeight(grow);
+            changeWeight(-grow);
         }
     }
 

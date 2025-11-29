@@ -52,7 +52,7 @@ public abstract class Animal extends Organism {
     public void reproduce() {
         super.reproduce();
         double slim = getChildWeight() / 2;
-        changeWeight(-slim);
+        changeWeight(slim);
     }
 
     @Override
@@ -77,8 +77,8 @@ public abstract class Animal extends Organism {
                     Organism food = foodIterator.next();
                     double foodWeight = food.getWeight();
                     double delta = Math.min(foodWeight, needFood);
-                    changeWeight(delta);
-                    food.changeWeight(-delta);
+                    changeWeight(-delta);
+                    food.changeWeight(delta);
                     if (food.getWeight() <= 0) foodIterator.remove();
                     needFood -= delta;
                     eat = true;
@@ -88,7 +88,7 @@ public abstract class Animal extends Organism {
             if (eat) return;
             int slimPercent = ThreadLocalRandom.current().nextInt(getParams().getAdditional().get("slimPercent")) * -1;
             double slim = getWeight() * slimPercent / 100.0;
-            changeWeight(-slim);
+            changeWeight(slim);
         }
     }
 
