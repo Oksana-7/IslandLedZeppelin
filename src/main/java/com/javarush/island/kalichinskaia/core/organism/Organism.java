@@ -1,7 +1,7 @@
 package com.javarush.island.kalichinskaia.core.organism;
 
+import com.javarush.island.kalichinskaia.config.Config.Params;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
-import com.javarush.island.kalichinskaia.config.Config.Limit;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,31 +11,31 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 public abstract class Organism {
-    private final Limit limit; // todo rename Params
+    private final Params param; // todo+ rename Params
     @Setter
     private double weight;
     private final Map<String, Integer> foodMap;
     @Setter
     private Area area;
 
-    protected Organism(Limit limit, Map<String, Integer> foodMap, Area area) {
-        this.limit = limit;
-        this.weight = ThreadLocalRandom.current().nextDouble(limit.getMaxWeight() / 2, limit.getMaxWeight());
+    protected Organism(Params param, Map<String, Integer> foodMap, Area area) {
+        this.param = param;
+        this.weight = ThreadLocalRandom.current().nextDouble(param.getMaxWeight() / 2, param.getMaxWeight());
         this.foodMap = foodMap;
         this.area = area;
     }
 
     public Organism createChild() {
-        Organism child = createOrganismOfType(this.getClass(), this.limit, this.foodMap, this.area);
+        Organism child = createOrganismOfType(this.getClass(), this.param, this.foodMap, this.area);
         child.setWeight(getChildWeight());
         return child;
     }
 
 
     public static Organism createOrganismOfType(Class<? extends Organism> orgType,
-                                                Limit limit, Map<String, Integer> foodMap, Area area) {
+                                                Params limit, Map<String, Integer> foodMap, Area area) {
         try {
-            return orgType.getConstructor(Limit.class, Map.class, Area.class)
+            return orgType.getConstructor(Params.class, Map.class, Area.class)
                     .newInstance(limit, foodMap, area);
         } catch (Exception e) {
             throw new RuntimeException("not found Entity constructor", e);
@@ -57,13 +57,19 @@ public abstract class Organism {
 
     }
 
+
     protected boolean canReproduce() {
         Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
-        return weight > getLimit().getMaxWeight() / 2
+        return weight > getParam().getMaxWeight() / 2
                 && organisms.contains(this)
-                && organisms.size() < limit.getMaxCountInArea();
+                && organisms.size() < param.getMaxCountInArea();
     }
 
     protected abstract double getChildWeight();
+
+    public void changeWeight(double weight, double delta) {
+        double newWeight = weight - delta;
+        setWeight(newWeight);
+    }
 
 }

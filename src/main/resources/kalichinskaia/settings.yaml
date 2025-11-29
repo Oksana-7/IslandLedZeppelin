@@ -5,112 +5,112 @@ cols: 100
 percentProbably: 30
 percentPlantGrow: 15
 
-organismLimits: # todo rename organismParams
+organismParams: # todo+ rename organismParams
   Wolf:
     maxCountInArea: 30
     maxWeight: 50.00
     maxSpeed: 3
     maxFood: 8.00
     additional:
-      maxSlimPercent: 15 # todo rename slimPercent
+      slimPercent: 15
   Boa:
     maxCountInArea: 30
     maxWeight: 15.00
     maxSpeed: 1
     maxFood: 3.00
     additional:
-      maxSlimPercent: 5
+      slimPercent: 5
   Fox:
     maxCountInArea: 30
     maxWeight: 8.00
     maxSpeed: 2
     maxFood: 2.00
     additional:
-      maxSlimPercent: 14
+      slimPercent: 14
   Bear:
     maxCountInArea: 5
     maxWeight: 500.00
     maxSpeed: 2
     maxFood: 80.00
     additional:
-      maxSlimPercent: 4
+      slimPercent: 4
   Eagle:
     maxCountInArea: 20
     maxWeight: 6.00
     maxSpeed: 3
     maxFood: 1.00
     additional:
-      maxSlimPercent: 2
+      slimPercent: 2
   Horse:
     maxCountInArea: 20
     maxWeight: 400.00
     maxSpeed: 4
     maxFood: 60.00
     additional:
-      maxSlimPercent: 8
+      slimPercent: 8
   Deer:
     maxCountInArea: 20
     maxWeight: 300.00
     maxSpeed: 4
     maxFood: 50.00
     additional:
-      maxSlimPercent: 10
+      slimPercent: 10
   Rabbit:
     maxCountInArea: 150
     maxWeight: 2.00
     maxSpeed: 2
     maxFood: 0.45
     additional:
-      maxSlimPercent: 3
+      slimPercent: 3
   Mouse:
     maxCountInArea: 500
     maxWeight: 0.05
     maxSpeed: 1
     maxFood: 0.01
     additional:
-      maxSlimPercent: 2
+      slimPercent: 2
   Goat:
     maxCountInArea: 140
     maxWeight: 60
     maxSpeed: 3
     maxFood: 10
     additional:
-      maxSlimPercent: 3
+      slimPercent: 3
   Sheep:
     maxCountInArea: 140
     maxWeight: 70
     maxSpeed: 3
     maxFood: 15
     additional:
-      maxSlimPercent: 3
+      slimPercent: 3
   Boar:
     maxCountInArea: 50
     maxWeight: 400
     maxSpeed: 2
     maxFood: 50
     additional:
-      maxSlimPercent: 7
+      slimPercent: 7
   Buffalo:
     maxCountInArea: 10
     maxWeight: 700
     maxSpeed: 3
     maxFood: 100
     additional:
-      maxSlimPercent: 9
+      slimPercent: 9
   Duck:
     maxCountInArea: 200
     maxWeight: 1
     maxSpeed: 4
     maxFood: 0.15
     additional:
-      maxSlimPercent: 3
+      slimPercent: 3
   Caterpillar:
     maxCountInArea: 1000
     maxWeight: 0.01
     maxSpeed: 0
     maxFood: 0
     additional:
-      maxSlimPercent: 1
+      slimPercent: 1
   Plant:
     maxCountInArea: 1
     maxWeight: 200.00

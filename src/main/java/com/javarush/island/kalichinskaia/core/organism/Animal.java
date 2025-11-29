@@ -1,6 +1,6 @@
 package com.javarush.island.kalichinskaia.core.organism;
 
-import com.javarush.island.kalichinskaia.config.Config.Limit;
+import com.javarush.island.kalichinskaia.config.Config.Params;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
 
 import java.util.Iterator;
@@ -11,13 +11,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Organism {
 
-    protected Animal(Limit limit, Map<String, Integer> foodMap, Area area) {
+    protected Animal(Params limit, Map<String, Integer> foodMap, Area area) {
         super(limit, foodMap, area);
     }
 
     @Override
     public void move() {
-        int maxCountStep = getLimit().getMaxSpeed();
+        int maxCountStep = getParam().getMaxSpeed();
         int countStep = ThreadLocalRandom.current().nextInt(maxCountStep + 1);
         Area currentArea = getArea();
         Area targetArea = getArea().getTargetArea(countStep);
@@ -76,8 +76,9 @@ public abstract class Animal extends Organism {
                     Organism food = foodIterator.next();
                     double foodWeight = food.getWeight();
                     double delta = Math.min(foodWeight, needFood);
-                    setWeight(getWeight() + delta); // todo may be use universal method???
-                    food.setWeight(foodWeight - delta); // todo may be use universal method???
+                    setWeight(getWeight() + delta); // todo- may be use universal method???
+//                    food.setWeight(foodWeight - delta); // todo+ may be use universal method???
+                    food.changeWeight(foodWeight, delta);
                     if (food.getWeight() <= 0) foodIterator.remove();
                     needFood -= delta;
                     eat = true;
@@ -85,17 +86,17 @@ public abstract class Animal extends Organism {
                 }
             }
             if (eat) return;
-            // todo slim via universal method + settings.yml -done
-            int slimPercent = ThreadLocalRandom.current().nextInt(getLimit().getAdditional().get("maxSlimPercent")) * -1; // todo use name "slimPercent"
+            // todo+ slim via universal method + settings.yml
+            int slimPercent = ThreadLocalRandom.current().nextInt(getParam().getAdditional().get("slimPercent")) * -1;
             double slim = getWeight() * slimPercent / 100.0;
-            double newWeight = Math.max(getLimit().getMaxWeight(), getWeight() - slim); // todo logic mistake
-            setWeight(newWeight);
-
+//            double newWeight = getWeight() - slim;
+//            setWeight(newWeight);
+            changeWeight(getWeight(), slim);
         }
     }
 
     private double getNeedFood() {
-        return Math.min(getLimit().getMaxFood(),
-                getLimit().getMaxWeight() - getWeight());
+        return Math.min(getParam().getMaxFood(),
+                getParam().getMaxWeight() - getWeight());
     }
 }
