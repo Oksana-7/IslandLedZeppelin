@@ -14,6 +14,9 @@ public class IslandLife {
     private final ScheduledExecutorService islandLifeExecutor;
     private final ExecutorService lifeProcessesExecutor;
 
+
+    // todo add field (Component) initialized by Island
+
     private boolean isFinished = false; //todo how and when to set true???
     // (если статистику выводить на консоль, всегда !isFinished. Если использовать JavaFx, то вызывается сеттер со значением true.)
 
@@ -38,6 +41,8 @@ public class IslandLife {
             for (LifeProcess lifeProcess : LifeProcess.values()) {
                 lifeProcessesExecutor.submit(lifeProcess.getAction());
             }
+            // todo 1.wait for finish all actions in lifeProcessesExecutor
+            //      2.run view (invoke method of added component)
             return;
         }
         lifeProcessesExecutor.shutdown();
