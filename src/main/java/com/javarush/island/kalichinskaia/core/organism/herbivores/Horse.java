@@ -2,12 +2,12 @@ package com.javarush.island.kalichinskaia.core.organism.herbivores;
 
 import com.javarush.island.kalichinskaia.core.organism.Animal;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
-import com.javarush.island.kalichinskaia.config.Config.Limit;
+import com.javarush.island.kalichinskaia.config.Config.Params;
 
 import java.util.Map;
 
 public class Horse extends Animal {
-    public Horse(Limit limit, Map<String, Integer> foodMap, Area area) {
-        super(limit, foodMap, area);
+    public Horse(Params params, Map<String, Integer> foodMap, Area area) {
+        super(params, foodMap, area);
     }
 }

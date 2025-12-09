@@ -15,6 +15,7 @@ public class IslandLife {
     private final ExecutorService lifeProcessesExecutor;
 
     private boolean isFinished = false; //todo how and when to set true???
+    // (если статистику выводить на консоль, всегда !isFinished. Если использовать JavaFx, то вызывается сеттер со значением true.)
 
     public IslandLife() {
         this.config = Config.createConfigFromFile();
