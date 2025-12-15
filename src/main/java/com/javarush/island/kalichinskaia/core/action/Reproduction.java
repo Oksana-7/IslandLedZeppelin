@@ -5,7 +5,8 @@ import com.javarush.island.kalichinskaia.core.organism.Organism;
 public class Reproduction extends Action {
 
     @Override
-    public void run() {
+    public Void call() {
         execute(Organism::reproduce);
+        return null;
     }
 }

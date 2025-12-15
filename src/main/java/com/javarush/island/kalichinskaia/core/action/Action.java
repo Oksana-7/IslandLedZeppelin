@@ -5,10 +5,12 @@ import com.javarush.island.kalichinskaia.core.habitat.Area;
 import com.javarush.island.kalichinskaia.core.habitat.Island;
 import lombok.Setter;
 
+import java.util.Collection;
+import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 @Setter
-public abstract class Action implements Runnable {
+public abstract class Action implements Callable<Void> {
 
     protected Island island;
 

@@ -5,7 +5,8 @@ import com.javarush.island.kalichinskaia.core.organism.Organism;
 public class Moving extends Action {
 
     @Override
-    public void run() {
+    public Void call() {
         execute(Organism::move);
+        return null;
     }
 }

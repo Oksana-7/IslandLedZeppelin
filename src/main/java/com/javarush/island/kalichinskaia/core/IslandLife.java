@@ -1,13 +1,14 @@
 package com.javarush.island.kalichinskaia.core;
 
+import com.javarush.island.kalichinskaia.core.action.Action;
 import com.javarush.island.kalichinskaia.core.habitat.Island;
 import com.javarush.island.kalichinskaia.config.Config;
 import com.javarush.island.kalichinskaia.core.action.LifeProcess;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.*;
 
 public class IslandLife {
     private final Config config;
@@ -38,11 +39,19 @@ public class IslandLife {
 
     private void doOneStep() {
         if (!isFinished) {
+            List<Callable<Void>> tasks = new ArrayList<>();
             for (LifeProcess lifeProcess : LifeProcess.values()) {
-                lifeProcessesExecutor.submit(lifeProcess.getAction());
+                Action task = lifeProcess.getAction();
+                tasks.add(task);
             }
             // todo 1.wait for finish all actions in lifeProcessesExecutor
             //      2.run view (invoke method of added component)
+            try {
+                lifeProcessesExecutor.invokeAll(tasks);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             return;
         }
         lifeProcessesExecutor.shutdown();
