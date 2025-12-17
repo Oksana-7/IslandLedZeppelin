@@ -25,6 +25,9 @@ public class Config {
     private int period;
     private int rows;
     private int cols;
+    private int console_show_rows;
+    private int console_show_cols;
+    private int console_cell_char_count;
     private int percentProbably;
     private int percentPlantGrow;
     private Map<String, Params> organismParams = new HashMap<>();

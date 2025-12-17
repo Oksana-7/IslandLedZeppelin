@@ -1,14 +1,22 @@
 package com.javarush.island.kalichinskaia.core.habitat;
 
 import com.javarush.island.kalichinskaia.config.Config;
+import com.javarush.island.kalichinskaia.core.organism.Organism;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class Island {
     @Getter
     private final Area[][] areas;
+
+    @Getter
+    private final Map<Organism, Long> statistics;
+
+    public Area getAreas(int row, int col) {
+        return areas[row][col];
+    }
 
     public Island(Config config) {
         this.areas = new Area[config.getRows()][config.getCols()];
@@ -28,5 +36,7 @@ public class Island {
                 areas[i][j].setNeighborAreas(neighborAreas);
             }
         }
+        statistics = new LinkedHashMap<>();
     }
+
 }

@@ -1,12 +1,12 @@
 package com.javarush.island.kalichinskaia.core;
 
-import com.javarush.island.kalichinskaia.core.action.Action;
-import com.javarush.island.kalichinskaia.core.habitat.Island;
 import com.javarush.island.kalichinskaia.config.Config;
+import com.javarush.island.kalichinskaia.core.action.Action;
 import com.javarush.island.kalichinskaia.core.action.LifeProcess;
+import com.javarush.island.kalichinskaia.core.habitat.Island;
+import com.javarush.island.kalichinskaia.view.ConsoleTableIsland;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -18,8 +18,8 @@ public class IslandLife {
 
     // todo add field (Component) initialized by Island
 
+
     private boolean isFinished = false; //todo how and when to set true???
-    // (если статистику выводить на консоль, всегда !isFinished. Если использовать JavaFx, то вызывается сеттер со значением true.)
 
     public IslandLife() {
         this.config = Config.createConfigFromFile();
@@ -44,14 +44,14 @@ public class IslandLife {
                 Action task = lifeProcess.getAction();
                 tasks.add(task);
             }
-            // todo 1.wait for finish all actions in lifeProcessesExecutor
-            //      2.run view (invoke method of added component)
             try {
                 lifeProcessesExecutor.invokeAll(tasks);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
+            Island island = new Island(config);
+            ConsoleTableIsland consoleTableIsland = new ConsoleTableIsland(island);
+            consoleTableIsland.showMap();
             return;
         }
         lifeProcessesExecutor.shutdown();

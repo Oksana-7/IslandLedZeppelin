@@ -2,6 +2,9 @@
 period: 1000
 rows: 20
 cols: 100
+console_show_rows: 5
+console_show_cols: 10
+console_cell_char_count: 3
 percentProbably: 30
 percentPlantGrow: 15
 
