@@ -14,10 +14,7 @@ public class IslandLife {
     private final Config config;
     private final ScheduledExecutorService islandLifeExecutor;
     private final ExecutorService lifeProcessesExecutor;
-
-
-    // todo add field (Component) initialized by Island
-
+    private ConsoleTableIsland consoleTableIsland;
 
     private boolean isFinished = false; //todo how and when to set true???
 
@@ -29,6 +26,7 @@ public class IslandLife {
         for (var lifeProcess : LifeProcess.values()) {
             lifeProcess.getAction().setIsland(island);
         }
+        this.consoleTableIsland = new ConsoleTableIsland(island);
     }
 
     public void start() {
@@ -49,8 +47,6 @@ public class IslandLife {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            Island island = new Island(config);
-            ConsoleTableIsland consoleTableIsland = new ConsoleTableIsland(island);
             consoleTableIsland.showMap();
             return;
         }
