@@ -90,7 +90,6 @@ public class ConsoleTableIsland {
     }
 
     private String getResidentSting(Area area) {
-//        int maxCount = config.getOrganismParams().get(getResidentSting(area)).getMaxCountInArea();
         synchronized (area) {
             String collect = area.getOrganismsByType().entrySet().stream()
                     .filter((organismsOfType) -> !organismsOfType.getValue().isEmpty())
