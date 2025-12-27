@@ -27,15 +27,15 @@ public class ConsoleTableIsland {
     public ConsoleTableIsland(Island island, Config config) {
         this.island = island;
 
-        cellCharCount = config.getConsole_cell_char_count();
+        cellCharCount = config.getConsoleCellCharCount();
         border = "═".repeat(cellCharCount);
 
-        int showRows = config.getConsole_show_rows();
+        int showRows = config.getConsoleShowRows();
         rows = config.getRows();
         cutRows = rows > showRows;
         rows = cutRows ? showRows : rows;
 
-        int showCols = config.getConsole_show_cols();
+        int showCols = config.getConsoleShowCols();
         cols = config.getCols();
         cutCols = cols > showCols;
         cols = cutCols ? showCols : cols;
