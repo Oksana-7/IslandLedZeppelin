@@ -24,8 +24,7 @@ public class ConsoleTableIsland {
     private final String bottomBorder;
     private final String bottomInfBorder;
 
-    public ConsoleTableIsland(Island island) {
-        final Config config = Config.createConfigFromFile();
+    public ConsoleTableIsland(Island island, Config config) {
         this.island = island;
 
         cellCharCount = config.getConsole_cell_char_count();

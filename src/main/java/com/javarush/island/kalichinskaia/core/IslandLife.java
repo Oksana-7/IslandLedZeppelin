@@ -26,7 +26,7 @@ public class IslandLife {
         for (var lifeProcess : LifeProcess.values()) {
             lifeProcess.getAction().setIsland(island);
         }
-        this.consoleTableIsland = new ConsoleTableIsland(island);
+        this.consoleTableIsland = new ConsoleTableIsland(island, config);
     }
 
     public void start() {
