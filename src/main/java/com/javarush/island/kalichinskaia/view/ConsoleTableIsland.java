@@ -50,6 +50,7 @@ public class ConsoleTableIsland {
         showMap();
         showStatistics();
         showScale();
+        System.out.println();
     }
 
     public void showStatistics() {
@@ -83,7 +84,7 @@ public class ConsoleTableIsland {
             }
             out.append(cutCols ? INF_MARGIN : CELL_MARGIN).append(LINE_BREAK);
         }
-        out.append(cutRows ? bottomInfBorder : bottomBorder).append(LINE_BREAK);
+        out.append(cutRows ? bottomInfBorder : bottomBorder);
         System.out.println(out);
     }
 

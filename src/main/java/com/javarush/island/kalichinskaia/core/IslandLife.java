@@ -47,7 +47,7 @@ public class IslandLife {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            consoleTableIsland.showMap();
+            consoleTableIsland.show();
             return;
         }
         lifeProcessesExecutor.shutdown();
