@@ -14,7 +14,7 @@ public class IslandLife {
     private final Config config;
     private final ScheduledExecutorService islandLifeExecutor;
     private final ExecutorService lifeProcessesExecutor;
-    private ConsoleTableIsland consoleTableIsland;
+    private final ConsoleTableIsland consoleTableIsland;
 
     private boolean isFinished = false; //todo how and when to set true???
 
