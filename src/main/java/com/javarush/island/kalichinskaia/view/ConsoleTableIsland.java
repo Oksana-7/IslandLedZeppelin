@@ -88,16 +88,15 @@ public class ConsoleTableIsland {
         System.out.println(out);
     }
 
-    private String getResidentSting(Area area) {
-        Config.Params param = new Config.Params();
-        int maxCount = param.getMaxCountInArea();
+    private String getResidentSting(Area area, Config.Params params) {
+        int maxCount = params.getMaxCountInArea();
         synchronized (area) {
-            String collect = area.getOrganismsByType().values().stream()
-                    .filter((list) -> !list.isEmpty())
-                    .sorted((o1, o2) -> o2.size() - o1.size())
+            String collect = area.getOrganismsByType().entrySet().stream()
+                    .filter((e) -> !e.getValue().isEmpty())
+                    .sorted((o1, o2) -> o2.getValue().size() - o1.getValue().size())
                     .limit(cellCharCount)
-                    .map(organism -> Color.getColor(organism.size(), maxCount)
-                            + organism.getClass().getSimpleName().substring(0, 1)
+                    .map(organismsOfType -> Color.getColor(organismsOfType.getValue().size(), maxCount)
+                            + organismsOfType.getKey().charAt(0)
                             + Color.RESET
                     )
                     .map(Object::toString)

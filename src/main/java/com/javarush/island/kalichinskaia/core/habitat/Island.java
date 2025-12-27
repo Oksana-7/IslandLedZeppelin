@@ -39,4 +39,9 @@ public class Island {
         statistics = new LinkedHashMap<>();
     }
 
+    public Stream<Area> getStreamAreas() {
+        return Arrays.stream(areas) //row
+                .flatMap(Arrays::stream); //cells in row
+    }
+
 }
