@@ -23,10 +23,11 @@ public class ConsoleTableIsland {
     private final String centerBorder;
     private final String bottomBorder;
     private final String bottomInfBorder;
+    private final Config config;
 
     public ConsoleTableIsland(Island island, Config config) {
         this.island = island;
-
+        this.config = config;
         cellCharCount = config.getConsoleCellCharCount();
         border = "═".repeat(cellCharCount);
 
@@ -88,14 +89,14 @@ public class ConsoleTableIsland {
         System.out.println(out);
     }
 
-    private String getResidentSting(Area area, Config.Params params) {
-        int maxCount = params.getMaxCountInArea();
+    private String getResidentSting(Area area) {
+//        int maxCount = config.getOrganismParams().get(getResidentSting(area)).getMaxCountInArea();
         synchronized (area) {
             String collect = area.getOrganismsByType().entrySet().stream()
-                    .filter((e) -> !e.getValue().isEmpty())
-                    .sorted((o1, o2) -> o2.getValue().size() - o1.getValue().size())
+                    .filter((organismsOfType) -> !organismsOfType.getValue().isEmpty())
+                    .sorted((organismsOfType1, organismsOfType2) -> organismsOfType2.getValue().size() - organismsOfType1.getValue().size())
                     .limit(cellCharCount)
-                    .map(organismsOfType -> Color.getColor(organismsOfType.getValue().size(), maxCount)
+                    .map(organismsOfType -> Color.getColor(organismsOfType.getValue().size(), config.getOrganismParams().get(organismsOfType.getKey()).getMaxCountInArea())
                             + organismsOfType.getKey().charAt(0)
                             + Color.RESET
                     )
