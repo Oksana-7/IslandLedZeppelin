@@ -44,4 +44,33 @@ public class Island {
                 .flatMap(Arrays::stream); //cells in row
     }
 
+    public void updateStatistics() {
+        Map<String, Double> rawStatistics = new HashMap<>();
+        getStreamAreas().forEach(area -> {
+            synchronized (area.monitor()) {
+                Set<Organism> residents = area.getAllOrganisms();
+                if (Objects.nonNull(residents)) {
+//                    residents.randomRotateResidents();
+                    residents.values().stream()
+                            .filter(organisms -> !organisms.isEmpty())
+                            .forEach(organisms -> {
+                                        String icon = organisms.getIcon();
+                                        double count = organisms.calculateSize();
+                                        rawStatistics.put(icon, rawStatistics.getOrDefault(icon, 0D) + count);
+                                    }
+                            );
+                }
+            }
+        });
+
+        for (Organism organism : Setting.PROTOTYPES) {
+            long count = (long) Math.ceil(rawStatistics.getOrDefault(organism.getIcon(), 0d));
+            if (count > 0) {
+                statistics.put(organism, count);
+            } else {
+                statistics.remove(organism);
+            }
+        }
+    }
+
 }

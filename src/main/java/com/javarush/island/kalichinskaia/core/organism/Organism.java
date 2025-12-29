@@ -18,6 +18,9 @@ public abstract class Organism {
     @Setter
     private Area area;
 
+    private String icon = "?";
+    private String letter = "?";
+
     protected Organism(Params params, Map<String, Integer> foodMap, Area area) {
         this.params = params;
         this.weight = ThreadLocalRandom.current().nextDouble(params.getMaxWeight() / 2, params.getMaxWeight());
@@ -57,7 +60,6 @@ public abstract class Organism {
 
     }
 
-
     protected boolean canReproduce() {
         Set<Organism> organisms = getArea().getOrganismsByType().get(getClass().getSimpleName());
         return weight > getParams().getMaxWeight() / 2
@@ -72,4 +74,28 @@ public abstract class Organism {
         weight = Math.max(0, weight);
         weight = Math.min(weight, params.getMaxWeight());
     }
+
+    public String getIcon() {
+        update();
+        return icon;
+    }
+
+    public String getLetter() {
+        update();
+        return letter;
+    }
+
+    private void update() {
+        if (params == null) {
+            if (!getArea().getOrganismsByType().get(getClass().getSimpleName()).isEmpty()) {
+                Organism organism = getArea().getOrganismsByType().get(getClass().getSimpleName())
+                        .iterator()
+                        .next();
+                params = organism.getParams();//not final?
+                icon = organism.getIcon();
+                letter = organism.getLetter();
+            }
+        }
+    }
+
 }

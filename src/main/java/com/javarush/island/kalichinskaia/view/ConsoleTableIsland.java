@@ -3,6 +3,7 @@ package com.javarush.island.kalichinskaia.view;
 import com.javarush.island.kalichinskaia.config.Config;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
 import com.javarush.island.kalichinskaia.core.habitat.Island;
+import com.javarush.island.kalichinskaia.core.organism.Organism;
 
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -112,4 +113,5 @@ public class ConsoleTableIsland {
             return collect + blank;
         }
     }
+
 }
