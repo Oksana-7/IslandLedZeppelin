@@ -3,7 +3,6 @@ package com.javarush.island.kalichinskaia.view;
 import com.javarush.island.kalichinskaia.config.Config;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
 import com.javarush.island.kalichinskaia.core.habitat.Island;
-import com.javarush.island.kalichinskaia.core.organism.Organism;
 
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -11,7 +10,7 @@ import java.util.stream.IntStream;
 
 import static com.javarush.island.kalichinskaia.view.Symbols.*;
 
-public class ConsoleTableIsland {
+public class ConsoleViewer {
     private int rows;
     private int cols;
     private final boolean cutRows;
@@ -26,7 +25,7 @@ public class ConsoleTableIsland {
     private final String bottomInfBorder;
     private final Config config;
 
-    public ConsoleTableIsland(Island island, Config config) {
+    public ConsoleViewer(Island island, Config config) {
         this.island = island;
         this.config = config;
         cellCharCount = config.getConsoleCellCharCount();

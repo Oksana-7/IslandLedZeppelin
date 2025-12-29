@@ -4,8 +4,10 @@ import com.javarush.island.kalichinskaia.config.Config;
 import com.javarush.island.kalichinskaia.core.organism.Organism;
 import lombok.Getter;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Island {
     @Getter
@@ -38,39 +40,4 @@ public class Island {
         }
         statistics = new LinkedHashMap<>();
     }
-
-    public Stream<Area> getStreamAreas() {
-        return Arrays.stream(areas) //row
-                .flatMap(Arrays::stream); //cells in row
-    }
-
-    public void updateStatistics() {
-        Map<String, Double> rawStatistics = new HashMap<>();
-        getStreamAreas().forEach(area -> {
-            synchronized (area.monitor()) {
-                Set<Organism> residents = area.getAllOrganisms();
-                if (Objects.nonNull(residents)) {
-//                    residents.randomRotateResidents();
-                    residents.values().stream()
-                            .filter(organisms -> !organisms.isEmpty())
-                            .forEach(organisms -> {
-                                        String icon = organisms.getIcon();
-                                        double count = organisms.calculateSize();
-                                        rawStatistics.put(icon, rawStatistics.getOrDefault(icon, 0D) + count);
-                                    }
-                            );
-                }
-            }
-        });
-
-        for (Organism organism : Setting.PROTOTYPES) {
-            long count = (long) Math.ceil(rawStatistics.getOrDefault(organism.getIcon(), 0d));
-            if (count > 0) {
-                statistics.put(organism, count);
-            } else {
-                statistics.remove(organism);
-            }
-        }
-    }
-
 }

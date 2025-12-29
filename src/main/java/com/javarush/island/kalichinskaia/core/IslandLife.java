@@ -4,7 +4,7 @@ import com.javarush.island.kalichinskaia.config.Config;
 import com.javarush.island.kalichinskaia.core.action.Action;
 import com.javarush.island.kalichinskaia.core.action.LifeProcess;
 import com.javarush.island.kalichinskaia.core.habitat.Island;
-import com.javarush.island.kalichinskaia.view.ConsoleTableIsland;
+import com.javarush.island.kalichinskaia.view.ConsoleViewer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class IslandLife {
     private final Config config;
     private final ScheduledExecutorService islandLifeExecutor;
     private final ExecutorService lifeProcessesExecutor;
-    private final ConsoleTableIsland consoleTableIsland;
+    private final ConsoleViewer consoleViewer;
 
     private boolean isFinished = false; //todo how and when to set true???
 
@@ -26,7 +26,7 @@ public class IslandLife {
         for (var lifeProcess : LifeProcess.values()) {
             lifeProcess.getAction().setIsland(island);
         }
-        this.consoleTableIsland = new ConsoleTableIsland(island, config);
+        this.consoleViewer = new ConsoleViewer(island, config);
     }
 
     public void start() {
@@ -47,7 +47,7 @@ public class IslandLife {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            consoleTableIsland.show();
+            consoleViewer.show();
             return;
         }
         lifeProcessesExecutor.shutdown();
