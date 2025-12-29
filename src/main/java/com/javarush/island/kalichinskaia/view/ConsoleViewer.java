@@ -15,8 +15,8 @@ public class ConsoleViewer {
     private int cols;
     private final boolean cutRows;
     private final boolean cutCols;
-
     private final Island island;
+    private final StatisticsProvider statisticsProvider;
     private final int cellCharCount;
     private final String border;
     private final String topBorder;
@@ -27,6 +27,7 @@ public class ConsoleViewer {
 
     public ConsoleViewer(Island island, Config config) {
         this.island = island;
+        this.statisticsProvider = new StatisticsProvider(island);
         this.config = config;
         cellCharCount = config.getConsoleCellCharCount();
         border = "═".repeat(cellCharCount);
@@ -55,7 +56,7 @@ public class ConsoleViewer {
     }
 
     public void showStatistics() {
-        System.out.println(island.getStatistics());
+        System.out.println(statisticsProvider);
     }
 
     public void showScale() {
@@ -80,8 +81,8 @@ public class ConsoleViewer {
         for (int row = 0; row < rows; row++) {
             out.append(row == 0 ? topBorder : centerBorder).append(LINE_BREAK);
             for (int col = 0; col < cols; col++) {
-                String residentSting = getResidentSting(island.getAreas(row, col));
-                out.append(String.format(CELL_MARGIN + "%-" + cellCharCount + "s", residentSting));
+                String areaView = buildAreaView(island.getAreas(row, col));
+                out.append(String.format(CELL_MARGIN + "%-" + cellCharCount + "s", areaView));
             }
             out.append(cutCols ? INF_MARGIN : CELL_MARGIN).append(LINE_BREAK);
         }
@@ -89,7 +90,7 @@ public class ConsoleViewer {
         System.out.println(out);
     }
 
-    private String getResidentSting(Area area) {
+    private String buildAreaView(Area area) {
         synchronized (area) {
             String collect = area.getOrganismsByType().entrySet().stream()
                     .filter((organismsOfType) -> !organismsOfType.getValue().isEmpty())
