@@ -4,6 +4,7 @@ import com.javarush.island.kalichinskaia.config.Config;
 import com.javarush.island.kalichinskaia.core.habitat.Area;
 import com.javarush.island.kalichinskaia.core.habitat.Island;
 
+import java.util.HashMap;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -56,7 +57,7 @@ public class ConsoleViewer {
     }
 
     public void showStatistics() {
-        System.out.println(statisticsProvider);
+        System.out.println(statisticsProvider.getStatistics());
     }
 
     public void showScale() {
@@ -90,7 +91,7 @@ public class ConsoleViewer {
         System.out.println(out);
     }
 
-    private String buildAreaView(Area area) {
+    private String buildAreaView(Area area) { // todo: minor: make more simple and readable
         synchronized (area) {
             String collect = area.getOrganismsByType().entrySet().stream()
                     .filter((organismsOfType) -> !organismsOfType.getValue().isEmpty())
@@ -113,5 +114,4 @@ public class ConsoleViewer {
             return collect + blank;
         }
     }
-
 }
